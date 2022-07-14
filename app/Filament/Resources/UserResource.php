@@ -10,23 +10,24 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Forms\Components\BelongsToSelect;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationLabel = 'Usuarios';
+
+    protected static ?string $navigationIcon = 'heroicon-o-users';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')->required(),
-                Forms\Components\TextInput::make('email')->email()->required(),
-                Forms\Components\TextInput::make('phone'),
-                Forms\Components\TextInput::make('address'),
-                Forms\Components\TextInput::make('facebook_profile'),
-                Forms\Components\TextInput::make('instagram_profile'),
+                
+                
             ]);
     }
 
@@ -34,12 +35,28 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\ImageColumn::make('imagen')->rounded(),
                 Tables\Columns\TextColumn::make('email'),
-                Tables\Columns\TextColumn::make('phone'),
-                Tables\Columns\TextColumn::make('address'),
-                Tables\Columns\TextColumn::make('facebook_profile'),
-                Tables\Columns\TextColumn::make('instagram_profile'),
+                //Tables\Columns\TextColumn::make('password'),
+                Tables\Columns\TextColumn::make('nombre'),
+                Tables\Columns\TextColumn::make('apellido'),
+                //Tables\Columns\TextColumn::make('direccion'),
+                //Tables\Columns\TextColumn::make('distritos.nombre'),
+                //Tables\Columns\TextColumn::make('dni'),
+                //Tables\Columns\TextColumn::make('estado_civil'),
+                //Tables\Columns\TextColumn::make('sexo'),
+                Tables\Columns\TextColumn::make('movil'),
+                //Tables\Columns\TextColumn::make('tel_casa_1'),
+                Tables\Columns\TextColumn::make('edad'),
+                //Tables\Columns\TextColumn::make('tel_casa_2'),
+                //Tables\Columns\TextColumn::make('fecha_nacimiento'),
+                Tables\Columns\TextColumn::make('cargos.nombre'),
+                Tables\Columns\TextColumn::make('areas.nombre'),
+                Tables\Columns\TextColumn::make('categorias.nombre'),
+                //Tables\Columns\TextColumn::make('acuerdo'),
+                //Tables\Columns\TextColumn::make('reglamento'),
+                Tables\Columns\TextColumn::make('fecha_ingreso'),
+                Tables\Columns\TextColumn::make('fecha_cese'),
             ])
             ->filters([
                 //

@@ -13,36 +13,30 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('asociados', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password')->nullable();
-            $table->string('imagen')->nullable();
-                                   
             $table->string('nombre')->nullable();
             $table->string('apellido')->nullable();
+            $table->integer('edad')->nullable();
+            $table->string('profesiones_id')->nullable();
+            $table->string('cargos_id')->nullable();
+            $table->string('imagen')->nullable();
             $table->string('direccion')->nullable();
             $table->string('distritos_id')->nullable();
-            $table->integer('dni')->nullable();
+            $table->string('documento')->nullable();
             $table->string('estado_civil')->nullable();
+            $table->string('red_social_favorita')->nullable();
             $table->string('sexo')->nullable();
-            $table->integer('edad')->nullable();
+            $table->string('hijos')->nullable();
+            $table->string('nacionalidad')->nullable();
+            $table->string('email')->unique();
+            $table->integer('ruc')->nullable();
             $table->integer('tel_casa_1')->nullable();
             $table->integer('tel_casa_2')->nullable();
-            
             $table->integer('movil')->nullable();
             $table->date('fecha_nacimiento')->nullable();
-
-            $table->string('cargos_id')->nullable();
-            $table->string('areas_id')->nullable();
-            $table->string('categorias_id')->nullable();
-            $table->string('acuerdo')->nullable();
-            $table->string('reglamento')->nullable();
-            $table->date('fecha_ingreso')->nullable();
-            $table->string('fecha_cese')->nullable();
-            
-            $table->rememberToken();
+            $table->string('preferencia_en_promociones')->nullable();
+            $table->date('fecha_vencimiento')->nullable();
             $table->timestamps();
         });
     }
@@ -54,6 +48,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('asociados');
     }
 };
