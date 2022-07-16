@@ -16,7 +16,8 @@ use Filament\Forms\Components\TimePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-//use App\Models\Asociado;
+use App\Models\Asociado;
+use App\Models\Plane;
 
 class PagoResource extends Resource
 {
@@ -32,14 +33,31 @@ class PagoResource extends Resource
                 ->required(),
                 BelongsToSelect::make('conceptos_id')->relationship('conceptos', 'nombre')
                 ->label(label:'Concepto')->required(),
-                BelongsToSelect::make('asociados_id')->relationship('asociados', 'nombre')
-                ->label(label:'Socio')->required(),
                 BelongsToSelect::make('planes_id')->relationship('planes', 'nombre')
-                ->label(label:'Plan')->required(),
-                
-                DatePicker::make('inicio')->format('Y-m-d')->displayFormat('d/m/Y')->required(),
-                DatePicker::make('vencimiento')->format('Y-m-d')->displayFormat('d/m/Y')->required(),
-                TextInput::make('moneda')->mask(fn (TextInput\Mask $mask) => $mask->money('S/', ',', 2))->required(),
+                ->label(label:'Plan')
+                ->options(Plane::all()->pluck('nombre', 'id')->toArray())
+                ->afterStateUpdated(function ($set, $state) {
+                        $set('monto_plan', Plane::find($state)->monto);
+                        $set('monto_soles', Plane::find($state)->monto);
+                })
+                ->reactive()->required(),
+                Select::make('asociados_id')
+                ->label(label:'Socio')
+                ->options(Asociado::all()->pluck('nombre', 'id')->toArray())
+                ->afterStateUpdated(function ($set, $state) {
+                        $set('inicio', Asociado::find($state)->fecha_registro);
+                        $set('vencimiento', Asociado::find($state)->fecha_vencimiento);
+                })
+                ->reactive()->required(),
+                Forms\Components\TextInput::make('inicio'),
+                Forms\Components\TextInput::make('vencimiento'),
+                Select::make('moneda')
+                    ->options([
+                        's' => 'S/',
+                        'd' => '$',
+                    ])  
+                    ->default('s')
+                    ->disablePlaceholderSelection(),
                 Select::make('forma')
                     ->options([
                         'efectivo' => 'Efectivo',
@@ -49,25 +67,27 @@ class PagoResource extends Resource
                     ->disablePlaceholderSelection(),
                 BelongsToSelect::make('bancos_id')->relationship('bancos', 'nombre')
                 ->label(label:'Banco')->required(),
-                Forms\Components\TextInput::make('tipo_cuenta')->required(),
-                Forms\Components\TextInput::make('numero_cuenta')->required(),
-                Forms\Components\TextInput::make('tarjeta')->required(),
-                Forms\Components\TextInput::make('numero_tarjeta')->required(),
-                Forms\Components\TextInput::make('recibidor')->required(),
+                Forms\Components\TextInput::make('tipo_cuenta'),
+                Forms\Components\TextInput::make('numero_cuenta'),
+                BelongsToSelect::make('tarjetas_id')->relationship('tarjetas', 'nombre')
+                ->label(label:'Tarjeta'),
+                Forms\Components\TextInput::make('numero_tarjeta'),
+                Forms\Components\TextInput::make('recibidor'),
                 Select::make('check_dscto')
+                    ->label(label:'Descuento')
                     ->options([
                         'si' => 'Si',
                         'no' => 'No',
                     ])  
                     ->default('no')
                     ->disablePlaceholderSelection(),
-                Forms\Components\TextInput::make('tarifa_dscto')->required(),
-                Forms\Components\TextInput::make('autoriza_dscto')->required(),
-                Forms\Components\TextInput::make('monto_dscto')->required(),
+                Forms\Components\TextInput::make('tarifa_dscto'),
+                Forms\Components\TextInput::make('autoriza_dscto'),
+                Forms\Components\TextInput::make('monto_dscto'),
                 Forms\Components\TextInput::make('monto_plan')->required(),
                 Forms\Components\TextInput::make('monto_soles')->required(),
-                Forms\Components\TextInput::make('monto_dolares')->required(),
-                Forms\Components\TextInput::make('monto_tarjeta')->required(),
+                Forms\Components\TextInput::make('monto_dolares'),
+                Forms\Components\TextInput::make('monto_tarjeta'),
                 Forms\Components\TextInput::make('tipo_documento')->required(),
                 Forms\Components\TextInput::make('serie_documento')->required(),
                 Forms\Components\TextInput::make('numero_documento')->required(),
@@ -79,20 +99,22 @@ class PagoResource extends Resource
                     ->default('no')
                     ->disablePlaceholderSelection(),
                 BelongsToSelect::make('empresas_id')->relationship('empresas', 'razon_social')
-                ->label(label:'Empresa')->required(),
-                Forms\Components\TextInput::make('contrato')->required(),
+                ->label(label:'Empresa'),
+                Forms\Components\TextInput::make('contrato'),
                 Textarea::make('observaciones')->rows(2),
                 TimePicker::make('hora')->timezone('America/Lima')->default(now())->required(),
                 //BelongsToSelect::make('users_id')->relationship('users', 'nombre')
                 //->label(label:'Vendedor')->required(),
                 Select::make('anula')
+                    ->label(label:'Anulado')
                     ->options([
                         'si' => 'Si',
                         'no' => 'No',
                     ])  
                     ->default('no')
                     ->disablePlaceholderSelection(),
-                DatePicker::make('fecha_anula')->format('Y-m-d')->displayFormat('d/m/Y'),
+                DatePicker::make('fecha_anula')->format('Y-m-d')->displayFormat('d/m/Y')
+                    ->label(label:'Fecha Anulado'),
                 
             ]);
     }

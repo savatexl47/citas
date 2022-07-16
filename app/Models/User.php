@@ -38,7 +38,7 @@ class User extends Authenticatable implements HasName, HasAvatar
         'fecha_nacimiento',
         'cargos_id',
         'areas_id',
-        'categorias_id',
+        //'categorias_id',
         'acuerdo',
         'reglamento',
         'fecha_ingreso',
@@ -98,10 +98,10 @@ class User extends Authenticatable implements HasName, HasAvatar
         return $this->belongsTo(Distrito::class);
     }
 
-    public function categorias()
-    {
-        return $this->belongsTo(Categoria::class);
-    }
+    //public function categorias()
+    //{
+        //return $this->belongsTo(Categoria::class);
+    //}
 
     public function pagos()
     {

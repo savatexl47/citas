@@ -7,5 +7,10 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateEmpresa extends CreateRecord
 {
+    protected function getTitle(): string
+    {
+        return 'Crear Empresa';
+    }
+
     protected static string $resource = EmpresaResource::class;
 }

@@ -7,5 +7,10 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateDisciplina extends CreateRecord
 {
+    protected function getTitle(): string
+    {
+        return 'Crear Disciplina';
+    }
+
     protected static string $resource = DisciplinaResource::class;
 }

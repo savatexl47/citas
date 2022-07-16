@@ -11,10 +11,16 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\BelongsToSelect;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Textarea;
+use Carbon\Carbon;
 
 class CreateAsociado extends CreateRecord
 {
     use CreateRecord\Concerns\HasWizard;
+
+    protected function getTitle(): string
+    {
+        return 'Crear Asociado';
+    }
 
     protected static string $resource = AsociadoResource::class;
 
@@ -31,7 +37,7 @@ class CreateAsociado extends CreateRecord
                         ->required(),
                     TextInput::make('email')->email()
                         ->required(),
-                    TextInput::make('documento')->required(),
+                    TextInput::make('documento')->integer()->length(8)->required(),
                     Select::make('estado_civil')
                     ->options([
                         'casado' => 'Casado',
@@ -48,11 +54,18 @@ class CreateAsociado extends CreateRecord
                     ])  
                     ->default('femenino')
                     ->disablePlaceholderSelection(),
-                    TextInput::make('edad'),
-                    TextInput::make('nacionalidad')->required(),
-                    DatePicker::make('fecha_nacimiento')->format('Y-m-d')->displayFormat('d/m/Y')
-                    ->required(),
                     
+                    TextInput::make('nacionalidad')->required(),
+                    
+                    DatePicker::make('fecha_nacimiento')->format('Y-m-d')->displayFormat('d/m/Y')
+                    ->afterStateUpdated(function($set, $state) {
+                        $set('date_diff', now()->diffInYears(Carbon::parse($state)));
+                    })
+                    ->reactive()
+                    ->required(),
+
+                    TextInput::make('date_diff')->label(label:'Edad')->suffix('Automatico al ingresar Fecha de Nacimiento')->required(),
+                                        
                 ]),
             Step::make('Contacto')
                 ->description('Información de Contacto')
@@ -62,8 +75,7 @@ class CreateAsociado extends CreateRecord
                     TextInput::make('movil')->integer()->length(9)->required(),
                     TextInput::make('direccion')->required(),
                     BelongsToSelect::make('distritos_id')->relationship('distritos', 'nombre'),
-                    DatePicker::make('fecha_cese')->format('Y-m-d')->displayFormat('d/m/Y'),
-                    
+                                        
                 ]),
             Step::make('Detalles')
                 ->description('Detalles')
@@ -86,10 +98,12 @@ class CreateAsociado extends CreateRecord
                     ])  
                     ->default('si')
                     ->disablePlaceholderSelection(),
-                    TextInput::make('ruc')->length(11)->required(),
+                    TextInput::make('ruc')->length(11),
                     Textarea::make('preferencia_en_promociones')->rows(2),
                     BelongsToSelect::make('profesiones_id')->relationship('profesiones', 'nombre'),
                     BelongsToSelect::make('cargos_id')->relationship('cargos', 'nombre'),
+                    DatePicker::make('fecha_registro')->format('Y-m-d')->displayFormat('d/m/Y')
+                    ->default(now())->label(label: 'Fecha Registro'),
                     DatePicker::make('fecha_vencimiento')->format('Y-m-d')->displayFormat('d/m/Y'),
                     
                 ]),

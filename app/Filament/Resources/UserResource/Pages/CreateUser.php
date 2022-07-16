@@ -15,6 +15,11 @@ class CreateUser extends CreateRecord
 {
     use CreateRecord\Concerns\HasWizard;
 
+    protected function getTitle(): string
+    {
+        return 'Crear Usuario';
+    }
+
     protected static string $resource = UserResource::class;
 
     protected function getSteps(): array
@@ -59,10 +64,11 @@ class CreateUser extends CreateRecord
                 ->schema([
                     BelongsToSelect::make('cargos_id')->relationship('cargos', 'nombre')->required(),
                     BelongsToSelect::make('areas_id')->relationship('areas', 'nombre')->required(),
-                    BelongsToSelect::make('categorias_id')->relationship('categorias', 'nombre')->required(),
+                    //BelongsToSelect::make('categorias_id')->relationship('categorias', 'nombre')->required(),
                     TextInput::make('acuerdo'),
                     TextInput::make('reglamento'),
-                    DatePicker::make('fecha_ingreso')->format('Y-m-d')->displayFormat('d/m/Y')->required(),
+                    DatePicker::make('fecha_ingreso')->format('Y-m-d')->displayFormat('d/m/Y')
+                    ->default(now())->required(),
                     DatePicker::make('fecha_cese')->format('Y-m-d')->displayFormat('d/m/Y'),
                 ]),
         ];

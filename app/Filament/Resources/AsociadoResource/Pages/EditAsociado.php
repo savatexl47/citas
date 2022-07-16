@@ -7,5 +7,10 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditAsociado extends EditRecord
 {
+     protected function getTitle(): string
+    {
+        return 'Editar Asociado';
+    }
+
     protected static string $resource = AsociadoResource::class;
 }

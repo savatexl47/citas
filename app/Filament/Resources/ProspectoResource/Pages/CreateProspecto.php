@@ -15,6 +15,11 @@ class CreateProspecto extends CreateRecord
 {
     
     use CreateRecord\Concerns\HasWizard;
+
+    protected function getTitle(): string
+    {
+        return 'Crear Prospecto';
+    }
     
     protected static string $resource = ProspectoResource::class;
 
@@ -62,8 +67,7 @@ class CreateProspecto extends CreateRecord
                     TextInput::make('movil')->integer()->length(9)->required(),
                     TextInput::make('direccion')->required(),
                     BelongsToSelect::make('distritos_id')->relationship('distritos', 'nombre'),
-                    DatePicker::make('fecha_cese')->format('Y-m-d')->displayFormat('d/m/Y'),
-                    
+                                        
                 ]),
             Step::make('Detalles')
                 ->description('Detalles')
@@ -90,6 +94,8 @@ class CreateProspecto extends CreateRecord
                     Textarea::make('preferencia_en_promociones')->rows(2),
                     BelongsToSelect::make('profesiones_id')->relationship('profesiones', 'nombre'),
                     BelongsToSelect::make('cargos_id')->relationship('cargos', 'nombre'),
+                    DatePicker::make('fecha_cese')->format('Y-m-d')->displayFormat('d/m/Y')
+                    ->default(now())->label(label: 'Fecha Registro'),
                     DatePicker::make('fecha_vencimiento')->format('Y-m-d')->displayFormat('d/m/Y'),
                     TextInput::make('invitado'),
                     TextInput::make('dias_invitado'),

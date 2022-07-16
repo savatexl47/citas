@@ -7,5 +7,10 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateProducto extends CreateRecord
 {
+    protected function getTitle(): string
+    {
+        return 'Crear Producto';
+    }
+
     protected static string $resource = ProductoResource::class;
 }

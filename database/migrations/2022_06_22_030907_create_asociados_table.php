@@ -36,6 +36,7 @@ return new class extends Migration
             $table->integer('movil')->nullable();
             $table->date('fecha_nacimiento')->nullable();
             $table->string('preferencia_en_promociones')->nullable();
+            $table->date('fecha_registro')->nullable();
             $table->date('fecha_vencimiento')->nullable();
             $table->timestamps();
         });

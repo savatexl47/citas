@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('plan')->nullable();
             $table->date('inicio')->nullable();
             $table->date('vencimiento')->nullable();
-            $table->decimal('moneda')->nullable();
+            $table->string('moneda')->nullable();
             $table->string('forma')->nullable();
             $table->string('banco')->nullable();
             $table->string('tipo_cuenta')->nullable();

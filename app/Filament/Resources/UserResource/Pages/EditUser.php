@@ -7,5 +7,10 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditUser extends EditRecord
 {
+    protected function getTitle(): string
+    {
+        return 'Editar Tarjeta';
+    }
+
     protected static string $resource = UserResource::class;
 }

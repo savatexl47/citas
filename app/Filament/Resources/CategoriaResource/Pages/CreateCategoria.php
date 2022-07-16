@@ -7,5 +7,10 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateCategoria extends CreateRecord
 {
+    protected function getTitle(): string
+    {
+        return 'Crear Categoría';
+    }
+
     protected static string $resource = CategoriaResource::class;
 }

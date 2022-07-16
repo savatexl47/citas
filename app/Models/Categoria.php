@@ -18,8 +18,8 @@ class Categoria extends Model
         return $this->belongsTo(Producto::class);
     }
 
-    public function users()
-    {
-        return $this->belongsTo(User::class);
-    }
+    //public function users()
+    //{
+        //return $this->belongsTo(User::class);
+    //}
 }

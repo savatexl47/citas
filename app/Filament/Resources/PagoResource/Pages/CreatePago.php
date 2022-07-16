@@ -15,7 +15,11 @@ use Filament\Forms\Components\Textarea;
 
 class CreatePago extends CreateRecord
 {
-    protected static string $resource = PagoResource::class;
+    protected function getTitle(): string
+    {
+        return 'Crear Pago';
+    }
 
+    protected static string $resource = PagoResource::class;
     
 }

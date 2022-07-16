@@ -8,5 +8,10 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateAsistencia extends CreateRecord
 {
+    protected function getTitle(): string
+    {
+        return 'Crear Asistencia';
+    }
+
     protected static string $resource = AsistenciaResource::class;
 }

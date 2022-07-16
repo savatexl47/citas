@@ -7,5 +7,10 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditCargo extends EditRecord
 {
+    protected function getTitle(): string
+    {
+        return 'Editar Cargo';
+    }
+
     protected static string $resource = CargoResource::class;
 }

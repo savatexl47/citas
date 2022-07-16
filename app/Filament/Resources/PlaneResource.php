@@ -24,7 +24,7 @@ class PlaneResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('nombre')->required(),
-                TextInput::make('moneda')->mask(fn (TextInput\Mask $mask) => $mask->money('S/', ',', 2))->required(),
+                TextInput::make('monto')->mask(fn (TextInput\Mask $mask) => $mask->money('S/', ',', 2))->required(),
                 Select::make('estado')
                     ->options([
                         'activo' => 'Activo',
@@ -33,8 +33,8 @@ class PlaneResource extends Resource
                 Forms\Components\TextInput::make('sesiones')->required(),
                 Forms\Components\TextInput::make('dias')->required(),
                 Forms\Components\TextInput::make('hora_inicio')->required(),
-                Forms\Components\TextInput::make('hora_fin')->required(),
                 Forms\Components\TextInput::make('d1'),
+                Forms\Components\TextInput::make('hora_fin')->required(),
                 Forms\Components\TextInput::make('d2'),
                 Forms\Components\TextInput::make('d3'),
                 Forms\Components\TextInput::make('d4'),

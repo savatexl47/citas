@@ -7,5 +7,10 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateCargo extends CreateRecord
 {
+    protected function getTitle(): string
+    {
+        return 'Crear Cargo';
+    }
+
     protected static string $resource = CargoResource::class;
 }

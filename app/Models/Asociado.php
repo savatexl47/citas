@@ -31,6 +31,7 @@ class Asociado extends Model
         'movil',
         'fecha_nacimiento',
         'preferencia_en_promociones',
+        'fecha_registro',
         'fecha_vencimiento',
     ];
 

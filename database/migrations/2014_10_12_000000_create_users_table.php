@@ -36,7 +36,7 @@ return new class extends Migration
 
             $table->string('cargos_id')->nullable();
             $table->string('areas_id')->nullable();
-            $table->string('categorias_id')->nullable();
+            //$table->string('categorias_id')->nullable();
             $table->string('acuerdo')->nullable();
             $table->string('reglamento')->nullable();
             $table->date('fecha_ingreso')->nullable();

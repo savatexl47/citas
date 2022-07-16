@@ -75,4 +75,9 @@ class Pago extends Model
     {
         return $this->belongsTo(Empresa::class);
     }
+
+    public function tarjetas()
+    {
+        return $this->belongsTo(Tarjeta::class);
+    }
 }

@@ -7,5 +7,10 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateDescuento extends CreateRecord
 {
+    protected function getTitle(): string
+    {
+        return 'Crear Descuento';
+    }
+
     protected static string $resource = DescuentoResource::class;
 }

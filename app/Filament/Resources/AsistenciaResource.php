@@ -55,7 +55,8 @@ class AsistenciaResource extends Resource
                     ->default('si')
                     ->disablePlaceholderSelection(),
                 BelongsToSelect::make('planes_id')->relationship('planes', 'nombre'),
-                DatePicker::make('fecha_rev')->format('Y-m-d')->displayFormat('d/m/Y')->required(),
+                DatePicker::make('fecha_rev')->format('Y-m-d')->displayFormat('d/m/Y')
+                ->label(label:'Fecha Vencimiento'),
                 Forms\Components\TextInput::make('deuda')->required(),
        
             ]);
@@ -76,7 +77,7 @@ class AsistenciaResource extends Resource
                 Tables\Columns\TextColumn::make('devolvio_toalla'),
                 Tables\Columns\TextColumn::make('disciplina'),
                 Tables\Columns\TextColumn::make('planes.nombre'),
-                Tables\Columns\TextColumn::make('fecha_rev'),
+                Tables\Columns\TextColumn::make('fecha_rev')->label(label:'Fecha Vencimiento'),
                 Tables\Columns\TextColumn::make('deuda'),
                 
             ])

@@ -7,5 +7,10 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditDescuento extends EditRecord
 {
+    protected function getTitle(): string
+    {
+        return 'Editar Descuento';
+    }
+
     protected static string $resource = DescuentoResource::class;
 }
