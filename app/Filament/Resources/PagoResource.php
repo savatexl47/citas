@@ -26,6 +26,7 @@ class PagoResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
 
     public static function form(Form $form): Form
+
     {
         return $form
             ->schema([

@@ -25,6 +25,19 @@ class CreateUser extends CreateRecord
     protected function getSteps(): array
     {
         return [
+            
+            Step::make('Detalles')
+                ->description('Detalles')
+                ->schema([
+                    BelongsToSelect::make('cargos_id')->relationship('cargos', 'nombre'),
+                    BelongsToSelect::make('areas_id')->relationship('areas', 'nombre'),
+                    //BelongsToSelect::make('categorias_id')->relationship('categorias', 'nombre')->required(),
+                    TextInput::make('acuerdo'),
+                    TextInput::make('reglamento'),
+                    DatePicker::make('fecha_ingreso')->format('Y-m-d')->displayFormat('d/m/Y')
+                    ->default(now())->required(),
+                    DatePicker::make('fecha_cese')->format('Y-m-d')->displayFormat('d/m/Y'),
+                ]),
             Step::make('Personal')
                 ->description('Información Personal')
                 ->schema([
@@ -33,14 +46,13 @@ class CreateUser extends CreateRecord
                         ->required(),
                     TextInput::make('apellido')
                         ->required(),
-                    TextInput::make('email')->email()
-                        ->required(),
+                    TextInput::make('email')->email()->required(),
                     TextInput::make('password')
                         ->required(),
                     
-                    TextInput::make('direccion')->required(),
+                    TextInput::make('direccion'),
                     BelongsToSelect::make('distritos_id')->relationship('distritos', 'nombre'),
-                    TextInput::make('dni')->integer()->length(8)->required(),
+                    TextInput::make('dni')->integer()->length(8),
                     Select::make('estado_civil')
                     ->options([
                         'casado' => 'Casado',
@@ -53,24 +65,18 @@ class CreateUser extends CreateRecord
                         'masculino' => 'Masculino',
                         
                     ]),
-                    TextInput::make('movil')->integer()->length(9)->required(),
+                    TextInput::make('movil')->integer()->length(9),
                     TextInput::make('tel_casa_1')->integer()->length(7),
-                    TextInput::make('edad')->required(),
                     TextInput::make('tel_casa_2')->integer()->length(7),
-                    DatePicker::make('fecha_nacimiento')->format('Y-m-d')->displayFormat('d/m/Y'),
+                    DatePicker::make('fecha_nacimiento')->format('Y-m-d')->displayFormat('d/m/Y')
+                    ->afterStateUpdated(function($set, $state) {
+                        $set('date_diff', now()->diffInYears(Carbon::parse($state)));
+                    })
+                    ->reactive(),
+
+                    TextInput::make('date_diff')->label(label:'Edad')->suffix('Automatico al ingresar Fecha de Nacimiento'),
+                    
                     ]),
-            Step::make('Detalles')
-                ->description('Detalles')
-                ->schema([
-                    BelongsToSelect::make('cargos_id')->relationship('cargos', 'nombre')->required(),
-                    BelongsToSelect::make('areas_id')->relationship('areas', 'nombre')->required(),
-                    //BelongsToSelect::make('categorias_id')->relationship('categorias', 'nombre')->required(),
-                    TextInput::make('acuerdo'),
-                    TextInput::make('reglamento'),
-                    DatePicker::make('fecha_ingreso')->format('Y-m-d')->displayFormat('d/m/Y')
-                    ->default(now())->required(),
-                    DatePicker::make('fecha_cese')->format('Y-m-d')->displayFormat('d/m/Y'),
-                ]),
         ];
     }
 }

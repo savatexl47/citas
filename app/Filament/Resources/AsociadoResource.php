@@ -21,48 +21,7 @@ class AsociadoResource extends Resource
     {
         return $form
             ->schema([
-               Step::make('Personal')
-                ->description('Información Personal')
-                ->schema([
-                    FileUpload::make('imagen')->avatar()->image()->columnspan(span: 'full'),
-                    TextInput::make('nombre')
-                        ->required(),
-                    TextInput::make('apellido')
-                        ->required(),
-                    TextInput::make('email')->email()
-                        ->required(),
-                    TextInput::make('documento')->integer()->length(8)->required(),
-                    Select::make('estado_civil')
-                    ->options([
-                        'casado' => 'Casado',
-                        'divorciado' => 'Divorciado',
-                        'soltero' => 'Soltero',
-                        'viudo' => 'Viudo',
-                    ])  
-                    ->default('soltero')
-                    ->disablePlaceholderSelection(),
-                    Select::make('sexo')
-                    ->options([
-                        'femenino' => 'Femenino',
-                        'masculino' => 'Masculino',
-                    ])  
-                    ->default('femenino')
-                    ->disablePlaceholderSelection(),
-                    
-                    TextInput::make('nacionalidad')->required(),
-                    
-                    DatePicker::make('fecha_nacimiento')->format('Y-m-d')->displayFormat('d/m/Y')
-                    //->minDate(now()->subYears(40))
-                    //->maxDate(now())
-                    ->afterStateUpdated(function($set, $state) {
-                        $set('date_diff', now()->diffInYears(Carbon::parse($state)));
-                    })
-                    ->reactive()
-                    ->required(),
-
-                    TextInput::make('date_diff')->label(label:'Edad')->suffix('Automatico al ingresar Fecha de Nacimiento')->required(),
-                                        
-                ]),
+               
             Step::make('Contacto')
                 ->description('Información de Contacto')
                 ->schema([
@@ -72,7 +31,7 @@ class AsociadoResource extends Resource
                     TextInput::make('direccion')->required(),
                     BelongsToSelect::make('distritos_id')->relationship('distritos', 'nombre'),
                                         
-                ]),
+                ])->skippable(),
             Step::make('Detalles')
                 ->description('Detalles')
                 ->schema([
@@ -101,6 +60,47 @@ class AsociadoResource extends Resource
                     DatePicker::make('fecha_registro')->format('Y-m-d')->displayFormat('d/m/Y')
                     ->default(now())->label(label: 'Fecha Registro'),
                     DatePicker::make('fecha_vencimiento')->format('Y-m-d')->displayFormat('d/m/Y'),
+                ])->skippable(),
+            Step::make('Personal')
+                ->description('Información Personal')
+                ->schema([
+                    FileUpload::make('imagen')->avatar()->image()->columnspan(span: 'full'),
+                    TextInput::make('nombre')
+                        ->required(),
+                    TextInput::make('apellido')
+                        ->required(),
+                    TextInput::make('email')->email(),
+                    TextInput::make('documento')->integer()->length(8),
+                    Select::make('estado_civil')
+                    ->options([
+                        'casado' => 'Casado',
+                        'divorciado' => 'Divorciado',
+                        'soltero' => 'Soltero',
+                        'viudo' => 'Viudo',
+                    ])  
+                    ->default('soltero')
+                    ->disablePlaceholderSelection(),
+                    Select::make('sexo')
+                    ->options([
+                        'femenino' => 'Femenino',
+                        'masculino' => 'Masculino',
+                    ])  
+                    ->default('femenino')
+                    ->disablePlaceholderSelection(),
+                    
+                    TextInput::make('nacionalidad'),
+                    
+                    DatePicker::make('fecha_nacimiento')->format('Y-m-d')->displayFormat('d/m/Y')
+                    //->minDate(now()->subYears(40))
+                    //->maxDate(now())
+                    ->afterStateUpdated(function($set, $state) {
+                        $set('date_diff', now()->diffInYears(Carbon::parse($state)));
+                    })
+                    ->reactive()
+                    ->required(),
+
+                    TextInput::make('date_diff')->label(label:'Edad')->suffix('Automatico al ingresar Fecha de Nacimiento'),
+                                        
                 ]),
             ]);
     }
